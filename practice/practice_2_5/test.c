@@ -78,3 +78,19 @@ int* findDisappearedNumbers(int* nums, int numsSize, int* returnSize) {
     }
     return arr;
 }
+//两数相加（位运算）
+int Add(int num1, int num2) {
+	int m = 0;
+	int n = 0;
+	m = (num1 & num2) << 1;
+	n = num1 ^ num2;
+	while (n & m)
+	{
+		num1 = m;
+		num2 = n;
+		m = (num1 & num2) << 1;
+		n = num1 ^ num2;
+	}
+
+	return m | n;
+}
