@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include "game.h"
 
-int boom_x = 0;
+int boom_x = 0;//设置全局变量，蛇食物的位置便于检测
 int boom_y = 0;
 
 void snake_init(Snake* ps)
