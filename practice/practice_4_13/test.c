@@ -94,7 +94,7 @@ char* gcdOfStrings(char* str1, char* str2) {
         len1 = len2;
         len2 = tmp2;
     }
-    int count = len2;
+    int count = len2 - 1;
     int l = len1 - 1;
     int r = len2 - 1;
     while (l>=0 && r>=0 /* && (l != r && r != -1)*/)
@@ -111,9 +111,9 @@ char* gcdOfStrings(char* str1, char* str2) {
         }
         if ((l >= 0 || r >= 0) == 0)
             break;
-        if (l >= len2 - 1)
+        if (l >= tmp1)
         {
-            r = len2 - 1;
+            r = tmp1;
         }
         else
         {
@@ -125,22 +125,26 @@ char* gcdOfStrings(char* str1, char* str2) {
             count = r;
         }
     }
-    char* ret = (char*)calloc(count, sizeof(char));
+    char* ret = (char*)calloc(count + 2, sizeof(char));
     if (ret == NULL)
     {
         perror("calloc");
         return NULL;
     }
-    strncpy(ret, str1, count);
+    int i = 0;
+    for (i = 0; i <= count; i++)
+    {
+        ret[i] = str1[i];
+    }
     return ret;
 }
 
-int main()
+int main()//字符串的最大公因子
 {
-    //char str1[] = "TAUXXTAUXXTAUXXTAUXXTAUXX";
-    //char str2[] = "TAUXXTAUXXTAUXXTAUXXTAUXXTAUXXTAUXXTAUXXTAUXX";
-    char str1[] = "ABCABC";
-    char str2[] = "ABC";
+    char str1[] = "CXTXNCXTXNCXTXNCXTXNCXTXN";
+    char str2[] = "CXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXNCXTXN";
+    //char str1[] = "ABCABC";
+    //char str2[] = "ABC";
     printf("%s", gcdOfStrings(str1, str2));
 	return 0;
 }
