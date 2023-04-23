@@ -7,7 +7,7 @@ SListNode* BuySListNode(SLTDateType x)
 	if (tmp == NULL)
 	{
 		perror("BuyNode malloc");
-		return;
+		return NULL;
 	}
 	tmp->data = x;
 	tmp->next = NULL;
@@ -27,6 +27,9 @@ void SListPrint(SListNode* plist)
 
 void SListPushBack(SListNode** pplist, SLTDateType x)
 {
+	assert(pplist);
+
+
 	SListNode* tail = *pplist;
 	if (tail == NULL)
 	{
@@ -44,6 +47,8 @@ void SListPushBack(SListNode** pplist, SLTDateType x)
 
 void SListPushFront(SListNode** pplist, SLTDateType x)
 {
+	assert(pplist);
+
 	SListNode* tmp = BuySListNode(x);
 	tmp->next = *pplist;
 	*pplist = tmp;
@@ -51,7 +56,9 @@ void SListPushFront(SListNode** pplist, SLTDateType x)
 
 void SListPopBack(SListNode** pplist)
 {
+	assert(pplist);
 	assert(*pplist);
+
 	if ((*pplist)->next == NULL)
 	{
 		free(*pplist);
@@ -71,7 +78,9 @@ void SListPopBack(SListNode** pplist)
 
 void SListPopFront(SListNode** pplist)
 {
+	assert(pplist);
 	assert(*pplist);
+	
 	SListNode* tail = *pplist;
 	*pplist = (*pplist)->next;
 	free(tail);
@@ -92,18 +101,67 @@ SListNode* SListFind(SListNode* plist, SLTDateType x)
 void SListInsertAfter(SListNode* pos, SLTDateType x)
 {
 	assert(pos);
+
 	SListNode* tail = pos->next;
 	pos->next = BuySListNode(x);
 	pos->next->next = tail;
 }
 
+void SListInsert(SListNode** pplist, SListNode* pos, SLTDateType x)
+{
+	assert(pplist);
+	assert(pos);
+
+	if (*pplist == pos)
+	{
+		SListPushFront(pplist, x);
+	}
+	else
+	{
+		SListNode* tail = *pplist;
+		while (tail->next != pos)
+		{
+			tail = tail->next;
+		}
+		SListNode* NewNode = BuySListNode(x);
+		NewNode->next = pos;
+		tail->next = NewNode;
+	}
+}
+
+
 void SListEraseAfter(SListNode* pos)
 {
-	assert(NULL || pos->next);
+	assert(pos && pos->next);
+
 	SListNode* tail = pos->next->next;
 	free(pos->next);
 	pos->next = tail;
 }
+
+void SListErase(SListNode** pplist, SListNode* pos)
+{
+	assert(pplist);
+	assert(pos);
+
+	if (*pplist == pos)
+	{
+		SListNode* tail = (*pplist)->next;
+		free(*pplist);
+		*pplist = tail;
+	}
+	else
+	{
+		SListNode* tail = *pplist;
+		while (tail->next != pos)
+		{
+			tail = tail->next;
+		}
+		tail->next = pos->next;
+		free(pos);
+	}
+}
+
 
 void SListDestroy(SListNode* plist)
 {

@@ -66,9 +66,12 @@ void TestSlist3()
 
 
 	SListInsertAfter(SListFind(s, 6), 7);
-	SListEraseAfter(SListFind(s, 5));
+	//SListEraseAfter(SListFind(s, 5));
 
 	//SListPopBack(&s);
+
+	SListInsert(&s, SListFind(s, 6), 20);
+	SListErase(&s, SListFind(s, 5));
 
 	SListPrint(s);
 	SListDestroy(s);

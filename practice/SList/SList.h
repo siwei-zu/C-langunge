@@ -28,8 +28,12 @@ SListNode* SListFind(SListNode* plist, SLTDateType x);
 // 单链表在pos位置之后插入x
 // 分析思考为什么不在pos位置之前插入？
 void SListInsertAfter(SListNode* pos, SLTDateType x);
+//在链表当前位置插入数据
+void SListInsert(SListNode** pplist, SListNode* pos, SLTDateType x);
 // 单链表删除pos位置之后的值
 // 分析思考为什么不删除pos位置？
 void SListEraseAfter(SListNode* pos);
+//删除当前位置的数据
+void SListErase(SListNode** pplist, SListNode* pos);
 // 单链表的销毁
 void SListDestroy(SListNode* plist);
