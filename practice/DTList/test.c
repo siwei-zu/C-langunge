@@ -24,6 +24,8 @@ void Test2()
 	DTListPopFront(phead);
 
 	DTListPrint(phead);
+	DTListdestroy(phead);
+	phead = NULL;
 }
 
 int main()

@@ -41,37 +41,43 @@ void DTListPushBack(DTList* phead , DataType x)
 {
 	assert(phead);
 
-	DTList* NewNode = BuyListNode(x);
-	DTList* prev = phead->prev;
+	DTListInsert(phead, x);
 
-	prev->next = NewNode;
-	NewNode->prev = prev;
-	phead->prev = NewNode;
-	NewNode->next = phead;
+	//DTList* NewNode = BuyListNode(x);
+	//DTList* prev = phead->prev;
+
+	//prev->next = NewNode;
+	//NewNode->prev = prev;
+	//phead->prev = NewNode;
+	//NewNode->next = phead;
 }
 
 void DTListPopBack(DTList* phead)
 {
 	assert(phead);
-	assert(phead->next != phead);
+	assert(phead->prev != phead);
 
-	DTList* prev = phead->prev;
-	phead->prev = prev->prev;
-	prev->prev->next = phead;
-	free(prev);
+	DTListErase(phead->prev);
+
+	//DTList* prev = phead->prev;
+	//phead->prev = prev->prev;
+	//prev->prev->next = phead;
+	//free(prev);
 }
 
 void DTListPushFront(DTList* phead, DataType x)
 {
 	assert(phead);
 
-	DTList* NewNode = BuyListNode(x);
-	DTList* next = phead->next;
+	DTListInsert(phead->next, x);
 
-	phead->next = NewNode;
-	NewNode->prev = phead;
-	NewNode->next = next;
-	next->prev = NewNode;
+	//DTList* NewNode = BuyListNode(x);
+	//DTList* next = phead->next;
+
+	//phead->next = NewNode;
+	//NewNode->prev = phead;
+	//NewNode->next = next;
+	//next->prev = NewNode;
 }
 
 void DTListPopFront(DTList* phead)
@@ -79,11 +85,13 @@ void DTListPopFront(DTList* phead)
 	assert(phead);
 	assert(phead->next != phead);
 
-	DTList* next = phead->next;
+	DTListErase(phead->next);
 
-	phead->next = next->next;
-	next->next->prev = phead;
-	free(next);
+	//DTList* next = phead->next;
+
+	//phead->next = next->next;
+	//next->next->prev = phead;
+	//free(next);
 }
 
 DTList* DTListFind(DTList* phead, DataType x)
@@ -100,6 +108,47 @@ DTList* DTListFind(DTList* phead, DataType x)
 	}
 	return NULL;
 }
+
+void DTListInsert(DTList* pos, DataType x)
+{
+	assert(pos);
+
+	DTList* prev = pos->prev;
+	DTList* NewNode = BuyListNode(x);
+
+	prev->next = NewNode;
+	NewNode->prev = prev;
+	NewNode->next = pos;
+	pos->prev = NewNode;
+}
+
+void DTListErase(DTList* pos)
+{
+	assert(pos);//缺陷：无法断定当前节点是否是phead，且无法判断链表中有无节点
+
+	DTList* next = pos->next;
+
+	pos->prev->next = next;
+	next->prev = pos->prev;
+	free(pos);
+}
+
+void DTListdestroy(DTList* phead)
+{
+	assert(phead);
+
+	DTList* cur = phead->next;
+	
+	while (cur != phead)
+	{
+		DTList* next = cur->next;
+		free(cur);
+		cur = next;
+	}
+	free(phead);
+}
+
+
 
 
 

@@ -20,14 +20,14 @@ void DTListPushBack(DTList* phead, DataType x);
 //尾删
 void DTListPopBack(DTList* phead);
 //头插
-void DTListPushFront(DTList* phead);
+void DTListPushFront(DTList* phead, DataType x);
 //头删
 void DTListPopFront(DTList* phead);
 //查找
 DTList* DTListFind(DTList* phead, DataType x);
 //指定位置插入
-DTList* DTListInsert(DTList* phead);
+void DTListInsert(DTList* phead, DataType x);
 //指定位置删除
-DTList* DTListErase(DTList* phead);
+void DTListErase(DTList* pos);
 //销毁
-DTList* DTListdestroy(DTList* phead);
+void DTListdestroy(DTList* phead);
