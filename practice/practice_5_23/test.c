@@ -188,28 +188,7 @@ void BinaryTreeLevelOrder(BTNode* root)
 // 判断二叉树是否是完全二叉树
 bool BinaryTreeComplete(BTNode* root)
 {
-	Queue qu;
-	QueueInit(&qu);
 
-	QueuePush(&qu, root);
-
-	while (!QueueEmpty(&qu))
-	{
-		BTNode* front = QueueFront(&qu);
-		if (front->left)
-		{
-			QueuePush(&qu, front->left);
-		}
-		if (front->right)
-		{
-			if (front->left == NULL)
-				return false;
-			QueuePush(&qu, front->right);
-		}
-		QueuePop(&qu);
-	}
-	return true;
-	QueueDestroy(&qu);
 }
 
 //二叉树的最大深度
@@ -239,8 +218,9 @@ int main()
 	printf("BinaryTreeLeafSize:%d\n", BinaryTreeLeafSize(root));
 	printf("BinaryTreeLevelKSize:%d\n", BinaryTreeLevelKSize(root, 3));
 	printf("BinaryTreeLevelKSize:%d\n", BinaryTreeLevelKSize(root, 4));
+	printf("%d\n", maxDepth(root));
 
-	printf("BTreeFind:%p\n", BTreeFind(root, 6));
+	printf("maxDepth:BTreeFind:%p\n", BTreeFind(root, 6));
 
 	/*if (BinaryTreeComplete(root))
 		printf("True\n");
