@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "QList.h"
 
@@ -28,6 +29,21 @@ BTNode* BuyNode(int x)
 	return TreeNode;
 }
 
+//前序创建二叉树函数
+//BTNode* BuyNode(char x)
+//{
+//	BTNode* TreeNode = (BTNode*)malloc(sizeof(BTNode));
+//	if (TreeNode == NULL)
+//	{
+//		perror("malloc fail");
+//		return NULL;
+//	}
+//	TreeNode->data = x;
+//	TreeNode->left = NULL;
+//	TreeNode->right = NULL;
+//	return TreeNode;
+//}
+
 BTNode* CreatBinaryTree()
 {
 	BTNode* node1 = BuyNode(1);
@@ -45,6 +61,7 @@ BTNode* CreatBinaryTree()
 	node4->right = node6;
 	node5->left = node7;
 	node7->left = node8;
+
 	return node1;
 }
 
@@ -60,6 +77,18 @@ void PreOrder(BTNode* root)
 	PreOrder(root->left);
 	PreOrder(root->right);
 }
+
+//void PreOrder(BTNode* Creat)
+//{
+//	if (Creat == NULL)
+//	{
+//		printf("#");
+//		return;
+//	}
+//	printf("%c", Creat->data);
+//	PreOrder(Creat->left);
+//	PreOrder(Creat->right);
+//}
 // 二叉树中序遍历
 void InOrder(BTNode* root)
 {
@@ -188,6 +217,27 @@ void BinaryTreeLevelOrder(BTNode* root)
 // 判断二叉树是否是完全二叉树
 bool BinaryTreeComplete(BTNode* root)
 {
+	Queue qu;
+	QueueInit(&qu);
+
+	QueuePush(&qu, root);
+
+	while (!QueueEmpty(&qu))
+	{
+		BTNode* front = QueueFront(&qu);
+		if (front == NULL)
+		{
+			if (!QueueEmpty(&qu))
+				return false;
+			else
+				return true;
+		}
+		QueuePush(&qu, front->left);
+		QueuePush(&qu, front->right);
+		QueuePop(&qu);
+	}
+	return true;
+	QueueDestroy(&qu);
 
 }
 
@@ -202,9 +252,29 @@ int maxDepth(BTNode* root)
 	return left > right ? left + 1 : right + 1;
 }
 
+// 通过前序遍历的数组"ABD##E#H##CF##G##"构建二叉树
+BTNode* BinaryTreeCreate(BTDataType* a, int n, int* pi)
+{
+	if(*pi < n)
+	{
+		if (*(a + *pi) == '#')
+		{
+			++(*pi);
+			return NULL;
+		}
+
+		BTNode* node = BuyNode(*(a + *pi));
+		++(*pi);
+		node->left = BinaryTreeCreate(a, n, pi);
+		node->right = BinaryTreeCreate(a, n, pi);
+		return node;
+	}
+}
+
 int main()
 {
 	BTNode* root = CreatBinaryTree();
+
 	PreOrder(root);
 	printf("\n");
 	InOrder(root);
@@ -222,11 +292,19 @@ int main()
 
 	printf("maxDepth:BTreeFind:%p\n", BTreeFind(root, 6));
 
-	/*if (BinaryTreeComplete(root))
+	if (BinaryTreeComplete(root))
 		printf("True\n");
 	else
-		printf("False\n");*/
+		printf("False\n");
 
+
+	//char a[] = "ABD##E#H##CF##G##";
+	//int sz = strlen(a);
+	//int i = 0;
+	//BTNode* Creat = BinaryTreeCreate(a, sz, &i);
+	//PreOrder(Creat);
+	//printf("\n");
 	BinaryTreeDestory(&root);
+	//BinaryTreeDestory(&Creat);
 	return 0;
 }
