@@ -31,7 +31,7 @@ int HeapEmpty(Hp* hp);
 void AdjustUp(HeapData* a, int x);
 //向下调整
 void AdjustDown(HeapData* a, int n, int x);
-
+//交换函数
 void Swap(HeapData* x, HeapData* y);
 
 

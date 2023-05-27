@@ -2,32 +2,32 @@
 #include "Heap.h"
 
 
-//void TestHeap()
-//{
-//	Hp hp;
-//	HeapInit(&hp);
-//
-//	HeapPush(&hp, 16);
-//	HeapPush(&hp, 53);
-//	HeapPush(&hp, 23);
-//	HeapPush(&hp, 94);
-//	HeapPush(&hp, 31);
-//	HeapPush(&hp, 72);
-//
-//	while(!HeapEmpty(&hp))
-//	{
-//		printf("%d\n", HeapTop(&hp));
-//		HeapPop(&hp);
-//	}
-//
-//	HeapDestory(&hp);
-//}
-//
-//int main()
-//{
-//	TestHeap();
-//	return 0;
-//}
+void TestHeap()
+{
+	Hp hp;
+	HeapInit(&hp);
+
+	HeapPush(&hp, 10);
+	HeapPush(&hp, 30);
+	HeapPush(&hp, 15);
+	HeapPush(&hp, 70);
+	HeapPush(&hp, 56);
+	HeapPush(&hp, 25);
+
+	while(!HeapEmpty(&hp))
+	{
+		printf("%d\n", HeapTop(&hp));
+		HeapPop(&hp);
+	}
+
+	HeapDestory(&hp);
+}
+
+int main()
+{
+	TestHeap();
+	return 0;
+}
 
 //void HeapSort(int* a, int sz)
 //{
