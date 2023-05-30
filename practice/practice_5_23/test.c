@@ -225,20 +225,27 @@ bool BinaryTreeComplete(BTNode* root)
 	while (!QueueEmpty(&qu))
 	{
 		BTNode* front = QueueFront(&qu);
+		QueuePop(&qu);
 		if (front == NULL)
 		{
-			if (!QueueEmpty(&qu))
-				return false;
-			else
-				return true;
+			break;
 		}
 		QueuePush(&qu, front->left);
 		QueuePush(&qu, front->right);
-		QueuePop(&qu);
 	}
-	return true;
-	QueueDestroy(&qu);
 
+	while (!QueueEmpty(&qu))
+	{
+		BTNode* front = QueueFront(&qu);
+		if (front)
+		{
+			QueueDestroy(&qu);
+			return false;
+		}
+	}
+
+	QueueDestroy(&qu);
+	return true;
 }
 
 //二叉树的最大深度
@@ -298,13 +305,14 @@ int main()
 		printf("False\n");
 
 
-	//char a[] = "ABD##E#H##CF##G##";
-	//int sz = strlen(a);
-	//int i = 0;
-	//BTNode* Creat = BinaryTreeCreate(a, sz, &i);
-	//PreOrder(Creat);
-	//printf("\n");
-	BinaryTreeDestory(&root);
+	/*char a[] = "abc##de#g##F###";
+	int sz = strlen(a);
+	int i = 0;
+	BTNode* Creat = BinaryTreeCreate(a, sz, &i);
+	PreOrder(Creat);
+	InOrder(Creat);
+	printf("\n");
+	BinaryTreeDestory(&root);*/
 	//BinaryTreeDestory(&Creat);
 	return 0;
 }
