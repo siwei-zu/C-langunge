@@ -118,10 +118,10 @@ int main()
 
 	//TestInsert();
 	//TestShell();
-	//TestOption();
-	//TestHeap();
+	TestOption();
+	TestHeap();
 	//TestBubble();
 
-	TestEfficiency();
+	//TestEfficiency();
 	return 0;
 }
