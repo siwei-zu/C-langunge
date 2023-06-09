@@ -316,3 +316,4 @@ int main()
 	//BinaryTreeDestory(&Creat);
 	return 0;
 }
+
