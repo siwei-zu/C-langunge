@@ -105,10 +105,11 @@ void menu3()
 	COORD pos;
 	pos.X = 0;
 	pos.Y = FACE_SZ + 1;
-	printf("*****************************\n");
-	printf("**** 1. Continue the game****\n");
-	printf("**** 0. Exit the game    ****\n");
-	printf("*****************************\n");
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+	printf(WHITE"*****************************\n");
+	printf(WHITE"**** 1. Continue the game****\n");
+	printf(WHITE"**** 0. Exit the game    ****\n");
+	printf(WHITE"*****************************\n");
 }
 
 
@@ -118,7 +119,7 @@ int game_pause()
 	do
 	{
 		menu3();
-		printf("«Î—°‘Ò:>");
+		printf(WHITE"«Î—°‘Ò:>");
 		scanf("%d", &input);
 		switch (input)
 		{
@@ -129,7 +130,7 @@ int game_pause()
 			return 0;
 			break;
 		default:
-			printf(" ‰»Î”–ŒÛ«Î÷ÿ–¬ ‰»Î\n");
+			printf(RED" ‰»Î”–ŒÛ«Î÷ÿ–¬ ‰»Î\n");
 			break;
 		}
 	} while (input);
@@ -164,6 +165,10 @@ int snake_move(Snake* snake, char face[][FACE_SZ - 2], char move)
 		move_x = 1;
 		move_y = 0;
 	}
+	else
+	{
+		return 0;
+	}
 	//else if(move == ' ')
 	//{
 	//	//”Œœ∑‘›Õ£∫Ø ˝
@@ -181,7 +186,7 @@ int snake_move(Snake* snake, char face[][FACE_SZ - 2], char move)
 	{
 		if (snake->body_coor[0][0] == snake->body_coor[i][0] && snake->body_coor[0][1] == snake->body_coor[i][1])
 		{
-			printf("”Œœ∑ ß∞‹\n");
+			printf(RED"”Œœ∑ ß∞‹\n");
 			free(snake->body_coor);
 			snake->body_coor = NULL;
 			exit(0);
@@ -194,11 +199,11 @@ int snake_move(Snake* snake, char face[][FACE_SZ - 2], char move)
 	{
 		free(snake->body_coor);
 		snake->body_coor = NULL;
-		printf("”Œœ∑ ß∞‹\n");
+		printf(RED"”Œœ∑ ß∞‹\n");
 		exit(0);
 	}
 
-	if (snake->body_coor[0][0] + move_y != snake->body_coor[1][0] || snake->body_coor[0][1] + move_x != snake->body_coor[1][1] && move != ' ')
+	if ((snake->body_coor[0][0] + move_y != snake->body_coor[1][0] || snake->body_coor[0][1] + move_x != snake->body_coor[1][1]))
 	{
 		for (i = 0; i < snake->len; i++)
 		{
@@ -345,17 +350,21 @@ void sanke_longer(Snake* snake, char face[][FACE_SZ - 2])//…ﬂ≥‘µΩ ≥ŒÔ∫Û…ÌÃÂ±‰≥§µ
 	}
 }
 
-//void test()
-//{
-//	char ch = 'a';
-//	while (ch = getchar() != '\n' && ch != EOF);
-//}
 
 void game_play(Snake* snake, char face[][FACE_SZ - 2])
 {
+	COORD pos;
 	int ret = 0;
 	char decide = 0;
 	game_interface(face, FACE_SZ);
+	pos.X = snake->body_coor[0][1] * 2 + 1;
+	pos.Y = snake->body_coor[0][0] + 1;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+	printf(RED"°ˆ");
+	pos.X = snake->body_coor[1][1] * 2 + 1;
+	pos.Y = snake->body_coor[1][0] + 1;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+	printf(GREEN"°ˆ");
 	set_food(face);
 	char move = 'w';
 	while (1)
@@ -364,11 +373,15 @@ void game_play(Snake* snake, char face[][FACE_SZ - 2])
 		pos.X = (FACE_SZ - 3) * 2 + 4;
 		pos.Y = 0;
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
-		printf(" ‰»Î∫œ∑®∑ΩœÚº¸“‘∆Ù∂Ø”Œœ∑\n");
+		printf(WHITE" ‰»Î∫œ∑®∑ΩœÚº¸“‘∆Ù∂Ø”Œœ∑\n");
 		move = _getch();
+		pos.X = (FACE_SZ - 3) * 2 + 4;
+		pos.Y = 0;
+		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+		printf("                                    ");
 		decide = move;
 		ret = move;
-		if (move != 'a')
+		if (move != 'a' && move != 'A')
 		{
 			pos.X = (FACE_SZ - 3) * 2 + 4;
 			pos.Y = 0;
@@ -385,13 +398,13 @@ void game_play(Snake* snake, char face[][FACE_SZ - 2])
 			pos.X = (FACE_SZ - 3) * 2 + 4;
 			pos.Y = 0;
 			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
-			printf("∑ΩœÚ≤ª∫œ∑®\n");
+			printf(WHITE"∑ΩœÚ≤ª∫œ∑®\n");
 			Sleep(1000);
 		}
 	}
 	while (1)
 	{
-		if (_kbhit() == 0)
+ 		if (_kbhit() == 0)
 		{
 			if (ret != 0)
 			{
@@ -413,7 +426,7 @@ void game_play(Snake* snake, char face[][FACE_SZ - 2])
 			if (move != decide)
 			{
 				ret = snake_move(snake, face, move);
-				if(ret != 0)
+				if(ret != 0 && move != ' ')
 				{
 					Sleep(TIME_REFRESH);// ±º‰øÿ÷∆À¢–¬
 				}
@@ -428,14 +441,43 @@ void game_play(Snake* snake, char face[][FACE_SZ - 2])
 					while (1)
 					{
 
-						printf(" ‰»Î∫œ∑®∑ΩœÚº¸“‘∆Ù∂Ø”Œœ∑\n");
+						//printf(WHITE" ‰»Î∫œ∑®∑ΩœÚº¸“‘∆Ù∂Ø”Œœ∑\n");
+						//move = _getch();
+						pos.X = (FACE_SZ - 3) * 2 + 4;
+						pos.Y = 0;
+						SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+						printf(WHITE" ‰»Î∫œ∑®∑ΩœÚº¸“‘∆Ù∂Ø”Œœ∑\n");
 						move = _getch();
+						pos.X = (FACE_SZ - 3) * 2 + 4;
+						pos.Y = 0;
+						SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+						printf("                                    ");
 						if (legal_move(snake, move) == 'q')
 						{
+							pos.X = (FACE_SZ - 3) * 2 + 4;
+							pos.Y = 0;
+							SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+							printf("                                 ");
+							pos.X = (FACE_SZ - 3) * 2 + 4;
+							pos.Y = 0;
+							SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 							printf(" ‰»ÎŒ•∑®\n");
+							Sleep(1000);
 						}
 						else
 						{
+							pos.Y = FACE_SZ + 1;
+							pos.X = 0;
+							SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+							printf("                                   \n");
+							printf("                                   \n");
+							printf("                                   \n");
+							printf("                                   \n");
+							printf("                                   \n");
+							printf("                                   \n");
+							printf("                                   \n");
+							printf("                                   \n");
+							decide = move;
 							break;
 						}
 					}
