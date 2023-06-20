@@ -123,6 +123,7 @@ const int dy[] = { -1,0,1,-1,1,-1,0,1 };
 
 int scan_boom(char board_display[][COL], char board_ground[][COL], int row, int col, int x, int y)//深度优先搜索
 {
+	COORD pos;
 	win--;
 		int i = 0;
 		int count = 0;
@@ -139,6 +140,11 @@ int scan_boom(char board_display[][COL], char board_ground[][COL], int row, int 
 		if (count == 0)
 		{
 			board_display[x][y] = ' ';
+			pos.X = y + 3 + y * 3;
+			pos.Y = (x + 1) * 2;
+			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+			printf(" ");
+			Sleep(20);
 			for (i = 0; i < 8; i++)
 			{
 				mx = x + dx[i];
@@ -154,6 +160,11 @@ int scan_boom(char board_display[][COL], char board_ground[][COL], int row, int 
 		{
 			board_ground[x][y] = '#';
 			board_display[x][y] = count + 48;
+			pos.X = y + 3 + y * 3;
+			pos.Y = (x + 1) * 2;
+			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+			printf("%d", count);
+			Sleep(20);
 		}
 }
 
