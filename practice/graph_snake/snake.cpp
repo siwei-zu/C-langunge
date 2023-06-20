@@ -57,11 +57,11 @@ void InitInterface()
 	//…Ë÷√∑Ω∏Ò
 	int i = 0;
 	setlinecolor(BLACK);
-	for (i = 10; i < 470; i+=20)//22*22
-	{
-		line(i, 10, i, 470);
-		line(10, i, 470, i);
-	}
+	//for (i = 10; i < 470; i+=20)//22*22
+	//{
+	//	line(i, 10, i, 470);
+	//	line(10, i, 470, i);
+	//}
 
 }
 
@@ -168,7 +168,7 @@ void SnakeMove(Sk* sk, char move)
 	}
 }
 
-bool LegalMove(Sk* sk, char move)
+bool LegalMove(Sk* sk, char move, int decide)
 {
 	int move_x = 0;
 	int move_y = 0;
@@ -198,7 +198,11 @@ bool LegalMove(Sk* sk, char move)
 	int y0 = sk->position[0][1];
 	int x1 = sk->position[1][0];
 	int y1 = sk->position[1][1];
-	if (x0 + move_x == x1 && y0 + move_y == y1)
+	if ((x0 + move_x == x1 && y0 + move_y == y1))
+	{
+		return false;
+	}
+	if (x0 + move_x == x1 + move_x * 2 && y0 + move_y == y1 + move_y * 2 && decide == 1)
 	{
 		return false;
 	}

@@ -7,7 +7,7 @@
 #include <stdbool.h>
 #include <conio.h>
 
-#define TIME 300
+#define TIME 200
 
 #define BOARD_SIZE 22
 
@@ -37,7 +37,7 @@ void SetFood();
 void SnakeMove(Sk* sk, char move);
 
 //蛇的移动是否合法
-bool LegalMove(Sk* sk, char move);
+bool LegalMove(Sk* sk, char move, int decide);
 
 //检测食物是否被吃掉
 bool ExistFood();

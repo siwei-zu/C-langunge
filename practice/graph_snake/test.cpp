@@ -78,7 +78,7 @@ void GamePlay(Sk* sk)
 	while (1)
 	{
 		move = _getch();
-		if (LegalMove(sk, move))
+		if (LegalMove(sk, move, 0))
 		{
 			ClearRT();
 			trace = move;
@@ -111,12 +111,13 @@ void GamePlay(Sk* sk)
 		}
 		else
 		{
-			if(LegalMove(sk, move))
+			if (LegalMove(sk, move, 1))
 			{
 				trace = move;
 			}
 			move = _getch();
-			if (move == ' ' || move == 27)
+
+			if (move == ' ' || move == 27)//‘›Õ£”Œœ∑
 			{
 				ExMessage msg;
 				ContinueBotton();
@@ -131,7 +132,7 @@ void GamePlay(Sk* sk)
 						while (1)
 						{
 							char tmp = _getch();
-							if (LegalMove(sk, tmp))
+							if (LegalMove(sk, tmp, 0))
 							{
 								move = tmp;
 								ClearRT();
@@ -152,7 +153,7 @@ void GamePlay(Sk* sk)
 					}
 				}
 			}
-			else if (LegalMove(sk, move))
+			else if (LegalMove(sk, move, 1))
 			{
 				if (judge_fail(sk, move))
 				{
@@ -177,6 +178,7 @@ void GamePlay(Sk* sk)
 				if (judge_fail(sk, move))
 				{
 					Destroy(sk);
+					while (1);
 					exit(0);
 				}
 				else
