@@ -675,3 +675,5 @@ void ScanHell(char** hellboard, int x, int y)
 
 
 
+
+
