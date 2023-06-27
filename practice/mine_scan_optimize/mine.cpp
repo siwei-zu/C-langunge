@@ -278,6 +278,7 @@ void GameWin()
 const int dx[] = { -1,-1,-1,0,0,1,1,1 };
 const int dy[] = { -1,0,1,-1,1,-1,0,1 };
 
+
 int minesimple = 71;
 char simpleboard_[9][9] = { 0 };
 void ScanSimple(char** simpleboard, int x, int y)
