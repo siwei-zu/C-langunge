@@ -673,7 +673,165 @@ void ScanHell(char** hellboard, int x, int y)
 }
 
 
+void SetMine(char** hellboard)
+{
+	int mine = 99;
+	while (mine)
+	{
+		int x = rand() % 30;
+		int y = rand() % 16;
+		if (hellboard[y][x] == '0')
+		{
+			hellboard[y][x] = '*';
+			mine--;
+		}
+	}
+}
 
+void InitBoard()
+{
+	//划线
+//setlinecolor(BLACK);
+//setlinestyle(PS_SOLID, 1);
+
+	int i = 0;
+	//for (i = 275; i < 675; i+=50)
+	//{
+	//	line(i, 0, i, 450);
+	//}
+	//for (i = 50; i < 450; i+=50)
+	//{
+	//	line(225, i, 675, i);
+	//}
+
+	//画方块
+	setfillcolor(RGB(93, 78, 255));//方块颜色
+	for (i = 0; i < 480; i += 30)//列
+	{
+		for (int j = 0; j < 900; j += 30)//行
+		{
+			solidroundrect(j + 1, i + 1, j + 29, i + 29, 5, 5);
+		}
+		Sleep(100);
+	}
+}
+
+void BlockDiscolour(int x, int y)
+{
+	setfillcolor(RGB(69, 58, 191));//方块变化后的颜色
+	solidroundrect(x + 1, y + 1, x + 29, y + 29, 5, 5);
+
+	int i = 0;
+	for (i = 0; i < 480; i += 30)//列
+	{
+		for (int j = 0; j < 900; j += 30)//行
+		{
+			if ((j != x || i != y) && getpixel(j + 5, i + 5) == RGB(69, 58, 191))
+			{
+				setfillcolor(RGB(93, 78, 255));//方块颜色
+				solidroundrect(j + 1, i + 1, j + 29, i + 29, 5, 5);
+			}
+		}
+	}
+}
+
+
+void InitBoard_()
+{
+	//划线
+//setlinecolor(BLACK);
+//setlinestyle(PS_SOLID, 1);
+
+	int i = 0;
+	//for (i = 275; i < 675; i+=50)
+	//{
+	//	line(i, 0, i, 450);
+	//}
+	//for (i = 50; i < 450; i+=50)
+	//{
+	//	line(225, i, 675, i);
+	//}
+
+	//画方块
+	setfillcolor(RGB(93, 78, 255));//方块颜色
+	for (i = 0; i < 480; i += 30)//列
+	{
+		for (int j = 0; j < 900; j += 30)//行
+		{
+			if (getpixel(j + 5, i + 5) == RGB(69, 58, 191))
+			{
+				solidroundrect(j + 1, i + 1, j + 29, i + 29, 5, 5);
+			}
+		}
+	}
+}
+
+
+int minehell = 16 * 30 - 99;
+char hellboard_[16][30] = { 0 };
+void Scan(char** hellboard, int x, int y)
+{
+	minehell--;
+	if (minehell == 0)
+	{
+		GameWin();
+		Sleep(1000);
+		for (int i = 0; i < 16; i++)
+		{
+			free(hellboard[i]);
+		}
+		free(hellboard);
+		exit(0);
+	}
+	int i = 0;
+	int count = 0;
+	int mx = 0;
+	int my = 0;
+	for (i = 0; i < 8; i++)//循环判断输入坐标的旁边八个位置有无雷
+	{
+		my = y + dy[i], mx = x + dx[i];
+		if ((mx >= 0 && mx < 30) && (my >= 0 && my < 16) && hellboard[my][mx] == '*')
+		{
+			count++;
+		}
+	}
+	if (count == 0)
+	{
+		setfillcolor(WHITE);
+		setbkcolor(WHITE);
+		clearroundrect(x * 30 + 1, y * 30 + 1, x * 30 + 29, y * 30 + 29, 5, 5);
+		solidroundrect(x * 30 + 1, y * 30 + 1, x * 30 + 29, y * 30 + 29, 5, 5);
+		Sleep(50);
+		for (i = 0; i < 8; i++)
+		{
+			my = y + dy[i];
+			mx = x + dx[i];
+			if ((mx >= 0 && mx < 32) && (my >= 0 && my < 16) && hellboard_[my][mx] != '#')//标记起作用
+			{
+				hellboard_[y][x] = '#';//同样是做标记的作用，
+				ScanHell(hellboard, mx, my);//进入递归对当前坐标旁边八个位置进行扫描
+			}
+		}
+	}
+	else//有雷的处理，改成#是为了在后续递归中当扫描这个点时不需要再次扫描，防止死递归
+	{
+		hellboard_[y][x] = '#';
+		hellboard[y][x] = count + 48;
+		setfillcolor(WHITE);
+		setbkcolor(WHITE);
+		clearroundrect(x * 30 + 1, y * 30 + 1, x * 30 + 29, y * 30 + 29, 5, 5);
+		solidroundrect(x * 30 + 1, y * 30 + 1, x * 30 + 29, y * 30 + 29, 5, 5);
+		char number = hellboard[y][x];
+		settextcolor(BLACK);
+		settextstyle(20, 10, "");
+
+		int number_w = textwidth(number);
+		int number_h = textheight(number);
+
+		outtextxy(x * 30 + (30 - number_w) / 2, y * 30 + (30 - number_h) / 2, number);
+		Sleep(50);
+	}
+}
 
 
 

@@ -18,6 +18,15 @@ void EndDiscolour();
 //游戏难度选择界面
 void InitDifficultyOptFace();
 
+//游戏失败
+void GameFail();
+
+//游戏成功
+void GameWin();
+
+//返回上一级
+void GoBack();
+
 //简单模式变色
 void SimpleDiscolour();
 //困难模式变色
@@ -25,8 +34,6 @@ void difficultyDiscolour();
 //地狱难度变色
 void HellDiscolour();
 
-//返回上一级
-void GoBack();
 
 //设置地雷-简单模式
 void SetMineSimple(char** simpleboard);
@@ -38,14 +45,10 @@ void InitSimpleBoard_();
 //简单模式方块变色
 void SimpleBlockDiscolour(int x, int y);
 
-//游戏失败
-void GameFail();
-
-//游戏成功
-void GameWin();
-
 //简单模式扫雷
 void ScanSimple(char** simpleboard, int x, int y);
+
+
 
 //设置地雷-困难模式
 void SetMineDifficulty(char** difficultyboard);
@@ -76,8 +79,19 @@ void HellBlockDiscolour(int x, int y);
 
 void InitHellBoard_();
 
-
 //地狱模式扫雷
 void ScanHell(char** hellboard, int x, int y);
 
 
+//设置地雷
+void SetMine(char** simpleboard);
+//界面
+void InitBoard();
+
+void InitBoard_();
+
+//方块变色
+void BlockDiscolour(int x, int y);
+
+//扫雷
+void Scan(char** simpleboard, int x, int y);
