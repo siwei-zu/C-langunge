@@ -154,3 +154,40 @@ void BubbleSort(int* a, int n)
 	}
 }
 
+//前后指针法
+int PartSort3(int* a, int begin, int end)
+{
+	int prev = begin;
+	int cur = begin + 1;
+	int keyi = begin;
+
+	while (cur <= end)
+	{
+		if (a[cur] < a[keyi])
+		{
+			++prev;
+			Swap(&a[prev], &a[cur]);
+		}
+			
+		++cur;
+	}
+
+	Swap(&a[keyi], &a[prev]);
+	keyi = prev;
+
+	return keyi;
+}
+
+//递归
+//闭区间[begin, end]
+void QuickSort(int* a, int begin, int end)
+{
+	if (begin >= end)
+		return;
+
+	int keyi = PartSort3(a, begin, end);
+
+	QuickSort(a, begin, keyi - 1);
+	QuickSort(a, keyi + 1, end);
+}
+

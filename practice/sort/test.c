@@ -46,6 +46,15 @@ void TestBubble()
 	Print(a, n);
 }
 
+void TestQuick()
+{
+	int a[] = { 1,5,8,7,4,6,9,3,2,0 };
+	int n = sizeof(a) / sizeof(a[0]);
+	QuickSort(a, 0, n - 1);
+	printf("QuickSort:");
+	Print(a, n);
+}
+
 void TestEfficiency()
 {
 	//制造随机数
@@ -69,35 +78,35 @@ void TestEfficiency()
 		a7[i] = a1[i];
 	}
 
-	int begin1 = clock();
-	InsertSort(a1, N);
-	int end1 = clock();
-	printf("InsertSort: %d\n", end1 - begin1);
+	//int begin1 = clock();
+	//InsertSort(a1, N);
+	//int end1 = clock();
+	//printf("InsertSort: %d\n", end1 - begin1);
 
 	int begin2 = clock();
 	ShellSort(a2, N);
 	int end2 = clock();
 	printf("ShellSort: %d\n", end2 - begin2);
 
-	int begin3 = clock();
-	OptionSort(a3, N);
-	int end3 = clock();
-	printf("OptionSort: %d\n", end3 - begin3);
+	//int begin3 = clock();
+	//OptionSort(a3, N);
+	//int end3 = clock();
+	//printf("OptionSort: %d\n", end3 - begin3);
 
 	int begin4 = clock();
 	HeapSort(a4, N);
 	int end4 = clock();
 	printf("HeapSort: %d\n", end4 - begin4);
 
-	int begin5 = clock();
-	BubbleSort(a5, N);
-	int end5 = clock();
-	printf("BubbleSort: %d\n", end5 - begin5);
+	//int begin5 = clock();
+	//BubbleSort(a5, N);
+	//int end5 = clock();
+	//printf("BubbleSort: %d\n", end5 - begin5);
 
-	//int begin1 = clock();
-	//InsertSort(a1, N);
-	//int end1 = clock();
-	//printf("InsertSort: %d\n", end1 - begin1);
+	int begin6 = clock();
+	QuickSort(a6, 0, N - 1);
+	int end6 = clock();
+	printf("QuickSort: %d\n", end6 - begin6);
 
 	//int begin1 = clock();
 	//InsertSort(a1, N);
@@ -118,10 +127,11 @@ int main()
 
 	//TestInsert();
 	//TestShell();
-	TestOption();
-	TestHeap();
+	//TestOption();
+	//TestHeap();
 	//TestBubble();
+	//TestQuick();
 
-	//TestEfficiency();
+	TestEfficiency();
 	return 0;
 }
