@@ -55,6 +55,15 @@ void TestQuick()
 	Print(a, n);
 }
 
+void TestMerge()
+{
+	int a[] = { 5,1,8,7,4,6,9,3,2,0 };
+	int n = sizeof(a) / sizeof(a[0]);
+	MergeSort(a, 0, n - 1);
+	printf("MergeSort:");
+	Print(a, n);
+}
+
 void TestEfficiency()
 {
 	//制造随机数
@@ -131,7 +140,8 @@ int main()
 	//TestHeap();
 	//TestBubble();
 	//TestQuick();
+	TestMerge();
 
-	TestEfficiency();
+	//TestEfficiency();
 	return 0;
 }

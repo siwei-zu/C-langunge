@@ -191,3 +191,33 @@ void QuickSort(int* a, int begin, int end)
 	QuickSort(a, keyi + 1, end);
 }
 
+
+void MergeSort(int* a, int left, int right)
+{
+	if (left == right)
+		return;
+
+	int mid = (left + right) / 2;
+	MergeSort(a, left, mid);
+	MergeSort(a, mid + 1, right);
+
+	int p1 = left;
+	int p2 = mid + 1;
+	while (p2 <= right)
+	{
+		if (p1 == p2)
+		{
+			if (++p2 == right + 1)
+				break;
+		}
+		
+
+		if (a[p1] > a[p2])
+		{
+			Swap(&a[p1], a[p2]);
+		}
+
+		p1++;
+	}
+}
+

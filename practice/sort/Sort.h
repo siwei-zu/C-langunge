@@ -19,3 +19,7 @@ void HeapSort(int* a, int n);
 void BubbleSort(int* a, int n);
 //快速排序
 void QuickSort(int* a, int begin, int end);
+//非递归快排
+
+//归并排序
+void MergeSort(int* a, int left, int right);
