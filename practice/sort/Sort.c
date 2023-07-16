@@ -154,9 +154,105 @@ void BubbleSort(int* a, int n)
 	}
 }
 
+int MidI(int* a, int begin, int end)
+{
+	int midi = (end - begin) / 2;
+
+	if (a[midi] > a[begin])
+	{
+		if (a[midi] < a[end])
+			return midi;
+		else
+		{
+			if (a[begin] > a[end])
+				return begin;
+			else
+				return end;
+		}
+	}
+	else
+	{
+		if (a[begin] < a[end])
+			return begin;
+		else
+		{
+			if (a[midi] > a[end])
+				return midi;
+			else
+				return end;
+		}
+	}
+}
+
+//霍尔的方法
+int PartSort1(int* a, int begin, int end)
+{
+	int midi = MidI(a, begin, end);
+	Swap(&a[begin], &a[midi]);
+
+	int keyi = begin;
+	int left = begin;
+	int right = end;
+
+	while (left < right)
+	{
+		while(left < right && a[right] >= a[keyi])
+		{
+			right--;
+		}
+
+		while (left <right && a[left] <= a[keyi])
+		{
+			left++;
+		}
+
+		Swap(&a[left], &a[right]);
+	}
+
+	Swap(&a[left], &a[keyi]);
+	return left;
+}
+
+//挖坑法
+int PartSort2(int* a, int begin, int end)
+{
+	int midi = MidI(a, begin, end);
+	Swap(&a[begin], &a[midi]);
+
+	int key = a[begin];
+	int holei = begin;
+
+	while (begin < end)
+	{
+		while (begin <end && a[end] >= key)
+		{
+			end--;
+		}
+
+		a[holei] = a[end];
+		holei = end;
+		
+
+		while (begin < end && a[begin] <= key)
+		{
+			begin++;
+		}
+
+		
+		a[holei] = a[begin];
+		holei = begin;	
+	}
+
+	a[holei] = key;
+	return holei;
+}
+
 //前后指针法
 int PartSort3(int* a, int begin, int end)
 {
+	int midi = MidI(a, begin, end);
+	Swap(&a[begin], &a[midi]);
+
 	int prev = begin;
 	int cur = begin + 1;
 	int keyi = begin;
@@ -186,38 +282,78 @@ void QuickSort(int* a, int begin, int end)
 		return;
 
 	int keyi = PartSort3(a, begin, end);
+	//int keyi = PartSort1(a, begin, end);
+	//int keyi = PartSort2(a, begin, end);
 
 	QuickSort(a, begin, keyi - 1);
 	QuickSort(a, keyi + 1, end);
 }
 
+void QuickSortNonR(int* a, int begin, int end)
+{
 
-void MergeSort(int* a, int left, int right)
+}
+
+void _MergeSort(int* a, int* tmp, int left, int right)
 {
 	if (left == right)
 		return;
 
-	int mid = (left + right) / 2;
-	MergeSort(a, left, mid);
-	MergeSort(a, mid + 1, right);
+	int midi = (left + right) / 2;
+	_MergeSort(a, tmp, left, midi);
+	_MergeSort(a, tmp, midi + 1, right);
 
-	int p1 = left;
-	int p2 = mid + 1;
-	while (p2 <= right)
+	int begin1 = left, end1 = midi;
+	int begin2 = midi + 1, end2 = right;
+	int i = begin1;
+	while (begin1 <= end1 && begin2 <= end2)
 	{
-		if (p1 == p2)
+		if (a[begin1] < a[begin2])
 		{
-			if (++p2 == right + 1)
-				break;
+			tmp[i] = a[begin1];
+			begin1++;
 		}
-		
-
-		if (a[p1] > a[p2])
+		else
 		{
-			Swap(&a[p1], a[p2]);
+			tmp[i] = a[begin2];
+			begin2++;
 		}
-
-		p1++;
+		i++;
 	}
+
+	while (begin1 <= end1)
+	{
+		tmp[i] = a[begin1];
+		begin1++;
+		i++;
+	}
+
+	while (begin2 <= end2)
+	{
+		tmp[i] = a[begin2];
+		begin2++;
+		i++;
+	}
+
+	memcpy(a + left, tmp + left, sizeof(int) * (right - left + 1));
+}
+
+void MergeSort(int* a, int n)
+{
+	int* tmp = (int*)malloc(sizeof(int) * n);
+	if (tmp == NULL)
+	{
+		perror("malloc fail");
+		return;
+	}
+
+	_MergeSort(a, tmp, 0, n - 1);
+
+	free(tmp);
+}
+
+void MergeSortNonR(int* a, int begin, int end)
+{
+
 }
 

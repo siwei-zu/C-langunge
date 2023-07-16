@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 //打印数组
 void Print(int* a, int n);
@@ -20,6 +21,9 @@ void BubbleSort(int* a, int n);
 //快速排序
 void QuickSort(int* a, int begin, int end);
 //非递归快排
+void QuickSortNonR(int* a, int begin, int end);
 
-//归并排序
-void MergeSort(int* a, int left, int right);
+//归并排序--递归
+void MergeSort(int* a, int n);
+//非递归
+void MergeSortNonR(int* a, int begin, int end);

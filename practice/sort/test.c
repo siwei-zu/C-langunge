@@ -48,7 +48,7 @@ void TestBubble()
 
 void TestQuick()
 {
-	int a[] = { 1,5,8,7,4,6,9,3,2,0 };
+	int a[] = { 4,5,8,7,1,6,9,3,2,0 };
 	int n = sizeof(a) / sizeof(a[0]);
 	QuickSort(a, 0, n - 1);
 	printf("QuickSort:");
@@ -59,7 +59,7 @@ void TestMerge()
 {
 	int a[] = { 5,1,8,7,4,6,9,3,2,0 };
 	int n = sizeof(a) / sizeof(a[0]);
-	MergeSort(a, 0, n - 1);
+	MergeSort(a, n);
 	printf("MergeSort:");
 	Print(a, n);
 }
@@ -68,7 +68,7 @@ void TestEfficiency()
 {
 	//制造随机数
 	srand((unsigned)time(NULL));
-	int N = 1000000;
+	int N = 100000;
 	int* a1 = (int*)malloc(sizeof(int) * N);
 	int* a2 = (int*)malloc(sizeof(int) * N);
 	int* a3 = (int*)malloc(sizeof(int) * N);
@@ -117,10 +117,10 @@ void TestEfficiency()
 	int end6 = clock();
 	printf("QuickSort: %d\n", end6 - begin6);
 
-	//int begin1 = clock();
-	//InsertSort(a1, N);
-	//int end1 = clock();
-	//printf("InsertSort: %d\n", end1 - begin1);
+	int begin7 = clock();
+	MergeSort(a7, N);
+	int end7 = clock();
+	printf("MergeSort: %d\n", end7 - begin7);
 
 	free(a1);
 	free(a2);
@@ -140,8 +140,8 @@ int main()
 	//TestHeap();
 	//TestBubble();
 	//TestQuick();
-	TestMerge();
+	//TestMerge();
 
-	//TestEfficiency();
+	TestEfficiency();
 	return 0;
 }
