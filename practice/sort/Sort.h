@@ -1,8 +1,11 @@
 #pragma once
+#include "Stack.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <assert.h>
 
 //打印数组
 void Print(int* a, int n);
@@ -26,4 +29,4 @@ void QuickSortNonR(int* a, int begin, int end);
 //归并排序--递归
 void MergeSort(int* a, int n);
 //非递归
-void MergeSortNonR(int* a, int begin, int end);
+void MergeSortNonR(int* a, int n);

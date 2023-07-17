@@ -291,7 +291,35 @@ void QuickSort(int* a, int begin, int end)
 
 void QuickSortNonR(int* a, int begin, int end)
 {
+	Stack st;
+	StackInit(&st);
 
+	StackPush(&st, end);
+	StackPush(&st, begin);
+
+	while (!StackEmpty(&st))
+	{
+		int left = StackTop(&st);
+		StackPop(&st);
+		int right = StackTop(&st);
+		StackPop(&st);
+
+		int keyi = PartSort1(a, left, right);
+
+		if (keyi + 1 < right)
+		{
+			StackPush(&st, right);
+			StackPush(&st, keyi + 1);
+		}
+
+		if (left < keyi - 1)
+		{
+			StackPush(&st, keyi - 1);
+			StackPush(&st, left);
+		}
+	}
+
+	StackDestroy(&st);
 }
 
 void _MergeSort(int* a, int* tmp, int left, int right)
@@ -352,8 +380,129 @@ void MergeSort(int* a, int n)
 	free(tmp);
 }
 
-void MergeSortNonR(int* a, int begin, int end)
-{
 
+//法一->排一段复制一段
+void MergeSortNonR(int* a, int n)
+{
+	assert(n > 0);
+	int* tmp = (int*)malloc(sizeof(int) * n);
+	if (tmp == NULL)
+	{
+		perror("malloc file");
+		return;
+	}
+	int gap = 1;
+
+	while (gap < n)
+	{
+		int j = 0;
+		for (int i = 0; i < n; i += gap * 2)
+		{
+			int begin1 = i, end1 = i + gap - 1;
+			int begin2 = i + gap, end2 = i + gap * 2 - 1;
+
+			if (end1 >= n || begin2 >= n)
+			{
+				break;
+			}
+
+			// 修正
+			if (end2 >= n)
+			{
+				end2 = n - 1;
+			}
+
+			while (begin1 <= end1 && begin2 <= end2)
+			{
+				if (a[begin1] < a[begin2])
+				{
+					tmp[j] = a[begin1];
+					begin1++;
+				}
+				else
+				{
+					tmp[j] = a[begin2];
+					begin2++;
+				}
+				j++;
+			}
+
+			while (begin1 <= end1)
+			{
+				tmp[j] = a[begin1];
+				begin1++;
+				j++;
+			}
+
+			while (begin2 <= end2)
+			{
+				tmp[j] = a[begin2];
+				begin2++;
+				j++;
+			}
+
+			memcpy(a + i, tmp + i, sizeof(int) * (end2 - i + 1));
+		}
+
+		gap *= 2;
+	}
+ 
+  free(tmp);
+}
+
+//法二，全部复制
+void MergeSortNonR(int* a, int n)
+{
+	assert(n > 0);
+	int* tmp = (int*)malloc(sizeof(int) * n);
+	if (tmp == NULL)
+	{
+		perror("malloc file");
+		return;
+	}
+	int gap = 1;
+
+	while (gap < n)
+	{
+		int j = 0;
+		for (int i = 0; i < n; i += gap * 2)
+		{
+			int begin1 = i, end1 = i + gap - 1;
+			int begin2 = i + gap, end2 = i + gap * 2 - 1;
+			while (begin1 < n && begin2 < n && begin1 <= end1 && begin2 <= end2)
+			{
+				if (a[begin1] < a[begin2])
+				{
+					tmp[j] = a[begin1];
+					begin1++;
+				}
+				else
+				{
+					tmp[j] = a[begin2];
+					begin2++;
+				}
+				j++;
+			}
+
+			while (begin1 < n && begin1 <= end1)
+			{
+				tmp[j] = a[begin1];
+				begin1++;
+				j++;
+			}
+
+			while (begin2 < n && begin2 <= end2)
+			{
+				tmp[j] = a[begin2];
+				begin2++;
+				j++;
+			}
+		}
+
+		gap *= 2;
+		memcpy(a, tmp, sizeof(int) * n);
+	}
+
+	free(tmp);
 }
 
