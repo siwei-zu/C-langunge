@@ -50,7 +50,9 @@ void TestQuick()
 {
 	int a[] = { 4,5,8,7,1,6,9,3,2,0 };
 	int n = sizeof(a) / sizeof(a[0]);
-	QuickSortNonR(a, 0, n - 1);
+	//QuickSort(a, 0, n - 1);
+	QuickSort_ThreeRoutes(a, 0, n - 1);
+	//QuickSortNonR(a, 0, n - 1);
 	printf("QuickSort:");
 	Print(a, n);
 }
@@ -59,8 +61,8 @@ void TestMerge()
 {
 	int a[] = { 5,1,8,7,4,6,9,3,2,0 };
 	int n = sizeof(a) / sizeof(a[0]);
-	//MergeSort(a, n);
-	MergeSortNonR(a, n);
+	MergeSort(a, n);
+	//MergeSortNonR(a, n);
 	printf("MergeSort:");
 	Print(a, n);
 }
@@ -114,8 +116,9 @@ void TestEfficiency()
 	//printf("BubbleSort: %d\n", end5 - begin5);
 
 	int begin6 = clock();
-	QuickSortNonR(a6, 0, N - 1);
-	//QuickSort(a6, 0, N - 1);
+	//QuickSort(a, 0, n - 1);
+	QuickSort_ThreeRoutes(a4, 0, N - 1);
+	//QuickSortNonR(a, 0, n - 1);
 	int end6 = clock();
 	printf("QuickSort: %d\n", end6 - begin6);
 
@@ -143,8 +146,8 @@ int main()
 	//TestHeap();
 	//TestBubble();
 	//TestQuick();
-	TestMerge();
+	//TestMerge();
 
-	//TestEfficiency();
+	TestEfficiency();
 	return 0;
 }

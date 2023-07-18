@@ -274,12 +274,63 @@ int PartSort3(int* a, int begin, int end)
 	return keyi;
 }
 
+//优化快速排序，从之前的分两路（ >=  和 <= ），改分三路（ > 和 == 和 < ）
+void QuickSort_ThreeRoutes(int* a, int begin, int end)
+{
+	if (begin >= end)
+		return;
+
+	//代码优化，小区间排序，插入排序
+	if (end - begin < 10)
+	{
+		InsertSort(a + begin, (end - begin + 1));
+		return;
+	}
+
+	int midi = MidI(a, begin, end);
+	Swap(&a[begin], &a[midi]);
+
+	int key = a[begin];
+	int cur = begin + 1;
+	int left = begin;
+	int right = end;
+	while (cur <= right)
+	{
+		if (a[cur] == key)
+		{
+			cur++;
+		}
+		else if (a[cur] > key)
+		{
+			Swap(&a[cur], &a[right]);
+			right--;
+		}
+		else
+		{
+			Swap(&a[cur], &a[left]);
+			left++;
+			cur++;
+		}
+	}
+
+	QuickSort_ThreeRoutes(a, begin, left - 1);
+	QuickSort_ThreeRoutes(a, cur + 1, end);
+}
+
+
 //递归
 //闭区间[begin, end]
 void QuickSort(int* a, int begin, int end)
 {
 	if (begin >= end)
 		return;
+
+	//代码优化，小区间排序，插入排序
+	if (end - begin < 10)
+	{
+		InsertSort(a + begin, (end - begin + 1));
+		return;
+	}
 
 	int keyi = PartSort3(a, begin, end);
 	//int keyi = PartSort1(a, begin, end);
@@ -326,6 +377,13 @@ void _MergeSort(int* a, int* tmp, int left, int right)
 {
 	if (left == right)
 		return;
+	
+	//代码优化，小区间排序，插入排序
+	if (right - left < 10)
+	{
+		InsertSort(a + left, (right - left + 1));
+		return;
+	}
 
 	int midi = (left + right) / 2;
 	_MergeSort(a, tmp, left, midi);
@@ -451,58 +509,58 @@ void MergeSortNonR(int* a, int n)
 }
 
 //法二，全部复制
-void MergeSortNonR(int* a, int n)
-{
-	assert(n > 0);
-	int* tmp = (int*)malloc(sizeof(int) * n);
-	if (tmp == NULL)
-	{
-		perror("malloc file");
-		return;
-	}
-	int gap = 1;
-
-	while (gap < n)
-	{
-		int j = 0;
-		for (int i = 0; i < n; i += gap * 2)
-		{
-			int begin1 = i, end1 = i + gap - 1;
-			int begin2 = i + gap, end2 = i + gap * 2 - 1;
-			while (begin1 < n && begin2 < n && begin1 <= end1 && begin2 <= end2)
-			{
-				if (a[begin1] < a[begin2])
-				{
-					tmp[j] = a[begin1];
-					begin1++;
-				}
-				else
-				{
-					tmp[j] = a[begin2];
-					begin2++;
-				}
-				j++;
-			}
-
-			while (begin1 < n && begin1 <= end1)
-			{
-				tmp[j] = a[begin1];
-				begin1++;
-				j++;
-			}
-
-			while (begin2 < n && begin2 <= end2)
-			{
-				tmp[j] = a[begin2];
-				begin2++;
-				j++;
-			}
-		}
-
-		gap *= 2;
-		memcpy(a, tmp, sizeof(int) * n);
-	}
-
-	free(tmp);
-}
+//void MergeSortNonR(int* a, int n)
+//{
+//	assert(n > 0);
+//	int* tmp = (int*)malloc(sizeof(int) * n);
+//	if (tmp == NULL)
+//	{
+//		perror("malloc file");
+//		return;
+//	}
+//	int gap = 1;
+//
+//	while (gap < n)
+//	{
+//		int j = 0;
+//		for (int i = 0; i < n; i += gap * 2)
+//		{
+//			int begin1 = i, end1 = i + gap - 1;
+//			int begin2 = i + gap, end2 = i + gap * 2 - 1;
+//			while (begin1 < n && begin2 < n && begin1 <= end1 && begin2 <= end2)
+//			{
+//				if (a[begin1] < a[begin2])
+//				{
+//					tmp[j] = a[begin1];
+//					begin1++;
+//				}
+//				else
+//				{
+//					tmp[j] = a[begin2];
+//					begin2++;
+//				}
+//				j++;
+//			}
+//
+//			while (begin1 < n && begin1 <= end1)
+//			{
+//				tmp[j] = a[begin1];
+//				begin1++;
+//				j++;
+//			}
+//
+//			while (begin2 < n && begin2 <= end2)
+//			{
+//				tmp[j] = a[begin2];
+//				begin2++;
+//				j++;
+//			}
+//		}
+//
+//		gap *= 2;
+//		memcpy(a, tmp, sizeof(int) * n);
+//	}
+//
+//	free(tmp);
+//}
 
