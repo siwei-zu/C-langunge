@@ -30,3 +30,6 @@ void QuickSortNonR(int* a, int begin, int end);
 void MergeSort(int* a, int n);
 //·ÇµÝ¹é
 void MergeSortNonR(int* a, int n);
+
+//¼ÆÊýÅÅÐò
+void CountSort(int* a, int n);

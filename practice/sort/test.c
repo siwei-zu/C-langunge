@@ -67,6 +67,15 @@ void TestMerge()
 	Print(a, n);
 }
 
+void TestCount()
+{
+	int a[] = { 6,1,8,6,4,6,9,3,6,0 };
+	int n = sizeof(a) / sizeof(a[0]);
+	CountSort(a, n);
+	printf("CountSort:");
+	Print(a, n);
+}
+
 void TestEfficiency()
 {
 	//制造随机数
@@ -147,7 +156,8 @@ int main()
 	//TestBubble();
 	//TestQuick();
 	//TestMerge();
+	TestCount();
 
-	TestEfficiency();
+	//TestEfficiency();
 	return 0;
 }
